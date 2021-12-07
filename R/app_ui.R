@@ -10,7 +10,10 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     # Your application UI logic 
     fluidPage(
-      h1("firstPackageR")
+      h1("firstPackageR"),
+      mod_name_of_module1_ui("name_of_module1_ui_1"),
+      mod_name_of_module2_ui("name_of_module2_ui_1"),
+      actionButton("alert", "browser"),
     )
   )
 }
@@ -36,7 +39,8 @@ golem_add_external_resources <- function(){
       app_title = 'firstPackageR'
     )
     # Add here other external resources
-    # for example, you can add shinyalert::useShinyalert() 
+    # for example, you can add shinyalert::useShinyalert()
+    
   )
 }
 
