@@ -17,6 +17,7 @@
 ## Add one line by package you want to add as dependency
 usethis::use_package( "thinkr" )
 
+
 ## Add modules ----
 ## Create a module infrastructure in R/
 golem::add_module( name = "name_of_module1" ) # Name of the module
@@ -92,4 +93,6 @@ usethis::use_gitlab_ci()
 # You're now set! ----
 # go to dev/03_deploy.R
 rstudioapi::navigateToFile("dev/03_deploy.R")
+
+
 
