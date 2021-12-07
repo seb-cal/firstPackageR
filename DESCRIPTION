@@ -1,12 +1,8 @@
 Package: firstPackageR
-Title: An Amazing Shiny App
+Title: My First Application
 Version: 0.0.0.9000
-Authors@R: 
-    person(given = "firstname",
-           family = "lastname",
-           role = c("aut", "cre"),
-           email = "your@email.com")
-Description: What the package does (one paragraph).
+Authors@R: person('Sebastien', 'Calvignac', email = 'edu.sebastiencalvignac@Mgmail.com', role = c('cre', 'aut'))
+Description: An application to learn packages in golem
 License: What license is it under?
 Imports: 
     attempt,
@@ -25,3 +21,5 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Language: en-US
+URL: https://github.com/sebastiencalvignacedu/firstPackageR.git
+BugReports: https://github.com/sebastiencalvignacedu/firstPackageR.git/issues
