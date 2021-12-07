@@ -1,0 +1,139 @@
+clust_khi_geo <- function(mots,nbgroupe,spdf_geo) {
+  
+  i<-which(colnames(DATA)== mots)
+  spdf1<-lspdf[[i]]
+  A<-inter_spdf(spdf1,2,spdf_geo,2)$A
+  A <- t(A)
+  dep <- A
+  khi_b <- chisq.test(dep)$statistic
+  # Renommage de la matrice A
+  Nb_mots <- length(A[,1])
+  coucou <- Nb_mots
+  Nb_region <- length(A[1,])
+  nom_col <- as.vector(seq(-1,-Nb_region,-1))
+  nom_row <- as.vector(seq(-1,-Nb_mots,-1))
+  colnames(A) <- nom_col
+  rownames(A) <- nom_row
+  
+  # Nombres de tour
+  combien <- Nb_mots - nbgroupe
+  
+  #  Variable utile pour la suite
+  valeur_des_khi <- c()
+  Matrice_de_cont <- c()
+  nom_de_la_variable_cree <- 1
+  nb_combi <- (Nb_mots*(Nb_mots+1)/2)-Nb_mots
+  historique <- matrix(NA,nrow = nb_combi,ncol = 2)
+  Histo_final <- matrix(NA,nrow = combien,ncol = 2)
+  possition <- 1
+  test <- 1
+  labels <- rownames(dep)
+  hii<-c()
+  
+  #dÃ©but la boucle
+  
+  #Boucle qui calcule toute les unions possible et par la suite calcule le nouveau khi-deux
+  
+  
+  #Boucle pour savoir le nombre de regroupement que l'on veut faire
+  for(nb in 1:combien) {
+    
+    historique <- matrix(NA,((Nb_mots*(Nb_mots+1)/2)-Nb_mots),2)
+    #Savoir le nombre de mots et le mots et le nombre de rÃ©gions
+    Nb_mots <- length(A[,1])
+    
+    #Boucle pour sÃ©lÃ¨ctionner l'ensemble des paires  calculer
+    for (i in 1:Nb_mots) {
+      for (p in 1:Nb_mots){
+        if (i == p) {
+          NULL
+        }
+        else if (p < i){
+          NULL
+        }
+        else {
+          
+          # Historique de touts les paires de regroupement
+          
+          nom_des_row <- rownames(A)
+          nom_des_col <- rownames(A)
+          historique[test,1] <- nom_des_row[i]
+          historique[test,2] <- nom_des_col[p]
+          test <- test +1
+          
+          # Addition des deux Khi-deux
+          cumule <- A[i,] + A[p,]
+          
+          #Suppresion des deux  lignes ajoutÃ©es dans l'Ã©tapes prÃ©cÃ©dante
+          nom <- rownames(A)
+          nom <- nom[c(-i,-p)]
+          Abis <- (A[c(-i,-p),]) 
+          
+          
+          
+          #CrÃ©ation de la nouvelle matrice avec le cumule des deux lignes i et j
+          Nouveau_matrice_de_cont <- (rbind(cumule,Abis))
+          
+          # Changement du nom de lignes
+          rownames(Nouveau_matrice_de_cont)[rownames(Nouveau_matrice_de_cont)=="cumule"] <- as.character(possition)  
+          
+          #Cas de l'avant dernier  groupe 
+          rownames(Nouveau_matrice_de_cont)[rownames(Nouveau_matrice_de_cont)=="Abis"] <- as.character(nom)
+          
+          rm(nom)
+          #Calcule du Khi-Deux sur la matrice de la ligne d'avant
+          
+          Khi_deux_bis <- chisq.test(Nouveau_matrice_de_cont)$statistic
+          valeur_des_khi <- rbind(valeur_des_khi,Khi_deux_bis)  
+          
+          #RÃ©cuperation des matrices de contingence de toutes les combinaison
+          Matrice_de_cont <- rbind(Matrice_de_cont,Nouveau_matrice_de_cont)
+        }
+      }
+    } 
+    
+    #Traitement des Khi-deux
+    valeur_des_khi <- as.vector(valeur_des_khi)
+    possition_du_max <- which.max(valeur_des_khi)
+    hii <- c(hii,(khi_b-valeur_des_khi[possition_du_max]))
+    ligne_de_debut <- (Nb_mots-1) * possition_du_max
+    
+    #RÃ©cupÃ©ration du nouveau tableau de contingence
+    A <- Matrice_de_cont[c(((ligne_de_debut+1)- (length(A[,1])-1) ):(ligne_de_debut)),]
+    
+    #gestion des historiques
+    valeurs <- historique[possition_du_max,]
+    Histo_final[nb,] <- as.numeric(valeurs)
+    possition <- possition+1
+    
+    #RÃ©nisialisation des variables
+    test <- 1
+    valeur_des_khi <- c()
+    possition_du_max <- c()
+    valeur_des_khi <- c()
+    ligne_de_debut <- c()
+    Matrice_de_cont <- c()
+    nom_des_row <- c()
+    nom_des_col <- c()
+    historique <- c()
+    
+    #Fin de la boucle
+  }
+  
+  #Fin
+  
+  if (class(A) == "numeric") {
+    A <- matrix(A,nrow = 1)
+    rownames(A) <- coucou
+  }
+  
+  
+  # Ordre du dendrogramme :
+  Depart2 <- calcul_ordre_dendro(n = coucou,merge = Histo_final)
+  
+  
+  
+  
+  # Sortie pour la fonction :
+  return(list(tableau = A, merge = Histo_final, labels = labels, order = Depart2,height = sort(abs(hii),decreasing = FALSE ) ))
+}
