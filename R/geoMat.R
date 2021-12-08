@@ -48,8 +48,8 @@ affichage<-function(mot, partition){
   
   
   palette<-rainbow(nrow(spdf1@data))
-  plot(spdf1,col=palette, main=paste('cartographie de la notion',colnames(DATA)[mot]),xlim=c(-2,13.4))
-  plot(partition,lwd=2,add=TRUE)
+  sp::plot(spdf1,col=palette, main=paste('cartographie de la notion',colnames(DATA)[mot]),xlim=c(-2,13.4))
+  sp::plot(partition,lwd=2,add=TRUE)
   legend("topright",legend=spdf1$lemme,fill=palette,ncol=3,cex = coeflegend)
 }
 
