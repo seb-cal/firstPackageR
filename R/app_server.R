@@ -8,6 +8,7 @@
 #' @import raster
 #' @import rgeos
 #' @import terra
+#' @import shinydashboard
 #' @noRd
 app_server <- function( input, output, session ) {
  

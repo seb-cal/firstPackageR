@@ -3,18 +3,39 @@
 #' @param request Internal parameter for `{shiny}`. 
 #'     DO NOT REMOVE.
 #' @import shiny
+#' @import shinydashboard
 #' @noRd
 app_ui <- function(request) {
   tagList(
     # Leave this function for adding external resources
     golem_add_external_resources(),
-    # Your application UI logic 
-    fluidPage(
-      h1("firstPackageR"),
-      mod_name_of_module1_ui("name_of_module1_ui_1"),
-      mod_name_of_module2_ui("name_of_module2_ui_1"),
-      actionButton("alert", "browser"),
+    # Your application UI logic
+    
+    dashboardPage(
+      dashboardHeader(title = "Basic dashboard"),
+      ## Sidebar content
+      dashboardSidebar(
+        sidebarMenu(
+          menuItem("Geomatique", tabName = "Geomatique", icon = icon("dashboard")),
+          menuItem("Graphes", tabName = "Graphes", icon = icon("th"))
+        )
+      ),
+      ## Body content
+      dashboardBody(
+        tabItems(
+          # First tab content
+          tabItem(tabName = "Geomatique",
+                  mod_name_of_module1_ui("name_of_module1_ui_1")
+          ),
+          
+          # Second tab content
+          tabItem(tabName = "Graphes",
+                  mod_name_of_module2_ui("name_of_module2_ui_1")
+          )
+        )
+      )
     )
+    
   )
 }
 

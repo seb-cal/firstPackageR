@@ -21,6 +21,7 @@ usethis::use_package( "rgdal" )
 usethis::use_package( "raster" )
 usethis::use_package( "rgeos" )
 usethis::use_package( "terra" )
+usethis::use_package( "shinydashboard" )
 
 ## Add modules ----
 ## Create a module infrastructure in R/
