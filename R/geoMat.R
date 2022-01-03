@@ -43,7 +43,7 @@ affichage_clust <- function(nom_de_la_fonction,mot,spdf.geo) {
   A<-inter_spdf(spdf1,2,spdf.geo,2)$A
   
   a <- nom_de_la_fonction(mot,1,spdf.geo)
-  i<-which(colnames(DATA)== mot)
+  i<-which(colnames(DATA)==mot)
   spdf1<-lspdf[[i]]
   A<-inter_spdf(spdf1,2,spdf.geo,2)$A
   
@@ -61,7 +61,7 @@ affichage_clust <- function(nom_de_la_fonction,mot,spdf.geo) {
 
 #' Map of a notion
 #'
-#' Draws map of a different spellings for a notion   
+#' Draws map of the different spellings for a notion   
 #'
 #' @param mot a notion
 #' @param partition Spatial Polygons Data Frame

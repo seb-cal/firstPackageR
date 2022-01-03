@@ -15,7 +15,7 @@ affichage(mot, partition)
 None
 }
 \description{
-Draws map of a different spellings for a notion
+Draws map of the different spellings for a notion
 }
 \examples{
 affichage("jardin",spdf.geo)
