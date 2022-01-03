@@ -9,6 +9,7 @@
 #' @import rgeos
 #' @import terra
 #' @import shinydashboard
+#' @import gt
 #' @noRd
 app_server <- function( input, output, session ) {
  

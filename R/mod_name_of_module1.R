@@ -17,7 +17,7 @@ mod_name_of_module1_ui <- function(id){
         sidebarPanel(
           selectInput(NS(id,"notionUI"),label = "Notion",choices = c("abeille")),
           selectInput(inputId = NS(id,'decoupageID'),label = 'Découpage Géographique',choices =  c("Partition linguistique","departement")),
-          sliderInput(inputId = NS(id,'clusterLevel'),label = 'Niveau de cluster',min=1,max=68,value=6)
+          sliderInput(inputId = NS(id,'clusterLevel'),label = 'Niveau de cluster (for dendrogram but unfinished)',min=1,max=68,value=6)
           
         ),
         mainPanel(
@@ -29,7 +29,7 @@ mod_name_of_module1_ui <- function(id){
           
           
           column(12,
-                 tableOutput(NS(id,'table'))
+                 gt_output(NS(id,'table'))
           )
           
           
@@ -52,9 +52,8 @@ mod_name_of_module1_server <- function(id){
     
     listeNotions<-colnames(DATA)[5:239]
     
-    updateSelectInput(session,'notionUI',choices=listeNotions)
+    updateSelectInput(session,'notionUI',choices=listeNotions,selected = "jardin")
     # affichage stat de base
-    
     
     output$stats = renderText({paste("Statistiques pour la notion :",input$notionUI,sep = " ")})
     
@@ -70,7 +69,7 @@ mod_name_of_module1_server <- function(id){
     })
     
     
-    output$table<-renderTable({
+    output$table<-render_gt({
       stat<-Calcule_statistique_base(mot=input$notionUI,spdf.geo= if (input$decoupageID=="Partition linguistique") {partitionChoisi<-spdf.geo} else {partitionChoisi <- spdf.dpt})
       
       nameIndicateur<-c()
@@ -82,7 +81,7 @@ mod_name_of_module1_server <- function(id){
       dataStats<-c(nameIndicateur,valIndicateur)
       dfStat<-data.frame(matrix(data=dataStats,nrow = 5))
       colnames(dfStat)<-c("indicateur","valeur")
-      dfStat
+      gt(dfStat)
 
     })
 
