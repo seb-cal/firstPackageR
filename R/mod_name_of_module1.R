@@ -16,7 +16,7 @@ mod_name_of_module1_ui <- function(id){
         headerPanel('GeoMatique'),
         sidebarPanel(
           selectInput(NS(id,"notionUI"),label = "Notion",choices = c("abeille")),
-          selectInput(inputId = NS(id,'decoupageID'),label = 'Découpage Géographique',choices =  c("Partition linguistique","departement")),
+          selectInput(inputId = NS(id,'decoupageID'),label = 'Découpage Géographique',choices =  c("Partition linguistique","departement (1min de chargement)")),
           sliderInput(inputId = NS(id,'clusterLevel'),label = 'Niveau de cluster (for dendrogram but unfinished)',min=1,max=68,value=6)
           
         ),

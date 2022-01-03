@@ -22,6 +22,8 @@ usethis::use_package( "raster" )
 usethis::use_package( "rgeos" )
 usethis::use_package( "terra" )
 usethis::use_package( "shinydashboard" )
+usethis::use_package( "ggplot2" )
+usethis::use_package( "dygraphs" )
 
 ## Add modules ----
 ## Create a module infrastructure in R/

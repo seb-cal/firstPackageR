@@ -10,6 +10,8 @@
 #' @import terra
 #' @import shinydashboard
 #' @import gt
+#' @import ggplot2
+#' @import dygraphs
 #' @noRd
 app_server <- function( input, output, session ) {
  

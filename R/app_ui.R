@@ -12,12 +12,12 @@ app_ui <- function(request) {
     # Your application UI logic
     
     dashboardPage(
-      dashboardHeader(title = "Basic dashboard"),
+      dashboardHeader(title = "My First Dashboard"),
       ## Sidebar content
       dashboardSidebar(
         sidebarMenu(
           menuItem("Geomatique", tabName = "Geomatique", icon = icon("dashboard")),
-          menuItem("Graphes", tabName = "Graphes", icon = icon("th"))
+          menuItem("Graphique intéractif", tabName = "Graphes", icon = icon("th"))
         )
       ),
       ## Body content

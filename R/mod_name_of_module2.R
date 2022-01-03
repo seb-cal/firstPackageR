@@ -10,8 +10,8 @@
 mod_name_of_module2_ui <- function(id){
   ns <- NS(id)
   tagList(
-    h2("another plot"),
-    plotOutput(ns("plot"))
+    h2("Plot intéractif (1min de chargement dsl)"),
+    dygraphOutput(ns("plot"))
  
   )
 }
@@ -22,8 +22,8 @@ mod_name_of_module2_ui <- function(id){
 mod_name_of_module2_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
-    output$plot = renderPlot({
-      plot(airquality)
+    output$plot = renderDygraph({
+      dailyAcc()
     })
  
   })
