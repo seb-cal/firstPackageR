@@ -1,3 +1,18 @@
+#' Area of geographic intersection
+#'
+#' Quantifies the area (in m2) of intersection between the geographical 
+#' distribution of a notion and that of any other geographic subsection 
+#'
+#' @param mot a notion
+#' @param spdf Spatial Polygons Data Frame
+#'
+#' @return surface area contigency table of intersection between a notion and 
+#' a spatial polygon data frame
+#'
+#' @examples
+#' A("jardin",spdf.geo)
+#'
+#' @export
 A <- function(mot,spdf) {
   
   i<-which(colnames(DATA)==mot) 
@@ -5,9 +20,22 @@ A <- function(mot,spdf) {
   spdf.geo<- spdf
   A<-inter_spdf(spdf1,2,spdf.geo,2)
   return(A$A)
-  
 }
 
+#' Dendrogram of lemma
+#'
+#' Draws a dendrogram with hierarchical clustering of lemmas  
+#'
+#' @param nom_de_la_fonction name of algorithm to be used
+#' @param mot a notion
+#' @param spdf.geo Spatial Polygons Data Frame
+#'
+#' @return None
+#'
+#' @examples
+#' affichage_clust("work in progress", "jardin",spdf.geo)
+#'
+#' @export
 affichage_clust <- function(nom_de_la_fonction,mot,spdf.geo) {
   
   i<-which(colnames(DATA)==mot) 
@@ -31,6 +59,19 @@ affichage_clust <- function(nom_de_la_fonction,mot,spdf.geo) {
   
 }
 
+#' Map of a notion
+#'
+#' Draws map of a different spellings for a notion   
+#'
+#' @param mot a notion
+#' @param partition Spatial Polygons Data Frame
+#'
+#' @return None
+#'
+#' @examples
+#' affichage("jardin",spdf.geo)
+#'
+#' @export
 affichage<-function(mot, partition){
   if (!is.numeric(mot)){
     mot<-which(colnames(DATA)==mot)
@@ -53,6 +94,22 @@ affichage<-function(mot, partition){
   legend("topright",legend=spdf1$lemme,fill=palette,ncol=3,cex = coeflegend)
 }
 
+#' Dendrogram cluster selection visual
+#'
+#' Draws a dendrogram with hierarchical clustering of lemmas with box around
+#' optimal clusters for given number of groups  
+#'
+#' @param Mots a notion
+#' @param nom_de_la_fonction name of algorithm to be used
+#' @param Nb_groupe number of cluster
+#' @param parti Spatial Polygons Data Frame
+#'
+#' @return None
+#'
+#' @examples
+#' Caffiche("jardin","work in progress",3,spdf.geo)
+#'
+#' @export
 Caffiche <- function(Mots,Type_de_clust,Nb_groupe,parti) {
   i<-which(colnames(DATA)==Mots) 
   spdf1<-lspdf[[i]]
@@ -61,6 +118,20 @@ Caffiche <- function(Mots,Type_de_clust,Nb_groupe,parti) {
   map_clust(cut = test,spdf1 = spdf1)
 }
 
+
+#' Order dendrogramme clustering
+#'
+#' Finds the proper order for dendrogam
+#'
+#' @param merge work in progress
+#' @param n number
+#'
+#' @return object
+#'
+#' @examples
+#' Calcule_statistique_base("work in progress",3)
+#'
+#' @export
 calcul_ordre_dendro<-function(merge,n){
   A<-rev(as.vector(t(merge)))
   p<-length(A)
@@ -76,6 +147,21 @@ calcul_ordre_dendro<-function(merge,n){
   return(-A[1:n])
 }
 
+#' Similarity statistics
+#'
+#' Calculates smilarity statistics between a notion and a spatial partition
+#'
+#' @param mot a notion
+#' @param spdf.geo Spatial Polygons Data Frame
+#'
+#' @return list with notion and similarity statistics between the notion and 
+#' a spatial partition. These include khi2, Cramer V2, specificity index,
+#' location index and entropy. 
+#'
+#' @examples
+#' Calcule_statistique_base("jardin",spdf.geo)
+#'
+#' @export
 Calcule_statistique_base <- function(mot,spdf.geo) {
   i<-which(colnames(DATA)==mot)
   notion<-mot
@@ -143,6 +229,18 @@ Calcule_statistique_base <- function(mot,spdf.geo) {
   }
 }
 
+#' Load files
+#'
+#' Loads spatial data frames into memory
+#'
+#' @param cheminDonnees string of path to data
+#'
+#' @return None
+#'
+#' @examples
+#' charger_Donnees("data-raw")
+#'
+#' @export
 charger_Donnees <- function(cheminDonnees) {
   # Consigne d'utilisation : Telecharger le dossier data,
   # et donner le chemin d'access vers ce dossier dans cheminDonnees
@@ -158,6 +256,21 @@ charger_Donnees <- function(cheminDonnees) {
   
 }
 
+#' Clustering of geographical partition by entropy
+#'
+#' hierarchical clustering of geographical partition based on the the measure of 
+#' entropy
+#'
+#' @param mots a notion
+#' @param nbgroupe number of groups
+#' @param spdf.geo Spatial Polygons Data Frame
+#'
+#' @return returns parameters for a dendrogram
+#'
+#' @examples
+#' clust_Entropie_geo("jardin",3,spdf.geo)
+#'
+#' @export
 clust_Entropie_geo <- function(mots,nbgroupe,spdf_geo) {
   
   i<-which(colnames(DATA)== mots)
@@ -299,6 +412,22 @@ clust_Entropie_geo <- function(mots,nbgroupe,spdf_geo) {
   return(list(tableau = A, merge = Histo_final, labels = labels, order = Depart2,height = sort(abs(hii),decreasing = FALSE ) ))
 }
 
+
+#' Clustering of notion by entropy
+#'
+#' hierarchical clustering of lemmas of a notion based on the the measure of 
+#' entropy 
+#'
+#' @param mots a notion
+#' @param nbgroupe number of groups
+#' @param spdf.geo Spatial Polygons Data Frame
+#'
+#' @return returns parameters for a dendrogram
+#'
+#' @examples
+#' clust_Entropie_notion("jardin",3,spdf.geo)
+#'
+#' @export
 clust_Entropie_notion <- function(mots,nbgroupe,spdf_geo) {
   
   i<-which(colnames(DATA)== mots)
@@ -439,6 +568,21 @@ clust_Entropie_notion <- function(mots,nbgroupe,spdf_geo) {
   return(list(tableau = A, merge = Histo_final, labels = labels, order = Depart2,height = sort(abs(hii),decreasing = FALSE )))
 }
 
+#' Clustering of geographical partition by khi2
+#'
+#' hierarchical clustering of geographical partition based on the the measure of 
+#' khi2 statistic of independence 
+#'
+#' @param mots a notion
+#' @param nbgroupe number of groups
+#' @param spdf.geo Spatial Polygons Data Frame
+#'
+#' @return returns parameters for a dendrogram
+#'
+#' @examples
+#' clust_khi_geo("jardin",3,spdf.geo)
+#'
+#' @export
 clust_khi_geo <- function(mots,nbgroupe,spdf_geo) {
   
   i<-which(colnames(DATA)== mots)
@@ -579,6 +723,21 @@ clust_khi_geo <- function(mots,nbgroupe,spdf_geo) {
   return(list(tableau = A, merge = Histo_final, labels = labels, order = Depart2,height = sort(abs(hii),decreasing = FALSE ) ))
 }
 
+#' Clustering of notion by khi2
+#'
+#' hierarchical clustering of lemmas of a notion based on the the measure of 
+#' khi2 of independence 
+#'
+#' @param mots a notion
+#' @param nbgroupe number of groups
+#' @param spdf.geo Spatial Polygons Data Frame
+#'
+#' @return returns parameters for a dendrogram
+#'
+#' @examples
+#' clust_Entropie_notion("jardin",3,spdf.geo)
+#'
+#' @export
 clust_khi_notion <- function(mots,nbgroupe,spdf_geo) {
   
   i<-which(colnames(DATA)== mots)
@@ -718,6 +877,20 @@ clust_khi_notion <- function(mots,nbgroupe,spdf_geo) {
   return(list(tableau = A, merge = Histo_final, labels = labels, order = Depart2,height = sort(abs(hii),decreasing = FALSE)))
 }
 
+#' Line Entropy
+#'
+#' Calculates the total line entropy of a contigency table 
+#'
+#' @param A surface area contigency table of intersection between a notion and 
+#' a spatial polygon data frame
+#'
+#' @return total entropy of given table
+#'
+#' @examples
+#' A = A("jardin",spdf.geo)
+#' Entropie_ligne(A)
+#'
+#' @export
 Entropie_ligne <- function(A) {
   ENTROL <- matrix(1, nrow(spdf1@data))
   colnames(ENTROL) = "Entropie"
@@ -734,6 +907,19 @@ Entropie_ligne <- function(A) {
   return(ENTROL)
 }
 
+#' Entropy
+#'
+#' Calculates the total entropy of a contigency table 
+#'
+#' @param A surface area contigency table of intersection between a notion and 
+#' a spatial polygon data frame
+#'
+#' @return total entropy of given table
+#'
+#' @examples
+#' Entropie(A("jardin",spdf.geo))
+#'
+#' @export
 Entropie <- function(A) {
   #A est le tableau de contingence des aires 
   somme <- sum(A)
@@ -745,6 +931,22 @@ Entropie <- function(A) {
   return(entropiex)
 }
 
+#' Geographic intersection
+#'
+#' indicates the presence (or lack) of intersection between polygons of a 
+#' spatial dataframe  
+#'
+#' @param spdf1 first Spatial Polygons Data Frame 
+#' @param idx1 column index of lemmas for spdf1
+#' @param spdf2 second Spatial Polygons Data Frame
+#' @param idx2 column index of lemmas for spdf2
+#'
+#' @return binary matrix of intersection between two spatial polygon data frame
+#'
+#' @examples
+#' inter_spdf(lspdf[[239]],2,spdf.geo,2)
+#'
+#' @export
 inter_spdf<-function(spdf1, idx1, spdf2, idx2){
   
   p<-length(spdf1)
@@ -787,6 +989,20 @@ inter_spdf<-function(spdf1, idx1, spdf2, idx2){
   
 }
 
+#' Sub dendrogram
+#'
+#' Draws dendogram with cut at optimal level. That is where there is the 
+#' maximum height difference between two levels
+#'
+#' @param cut list of heights of hclust
+#' @param spdf1 Spatial Polygons Data Frame
+#'
+#' @return None
+#'
+#' @examples
+#' A("jardin",spdf.geo)
+#'
+#' @export
 map_clust <- function(cut, spdf1){
   
   pol_base <- list()
