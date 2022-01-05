@@ -7,6 +7,10 @@
 #' @noRd 
 #'
 #' @importFrom shiny NS tagList 
+load("./data/spdfGEO.Rdata")
+load("./data/spdfDPT.Rdata")
+load("./data/thesoc_data.Rdata")
+load("./data/thesoc_spdf.Rdata")
 mod_name_of_module1_ui <- function(id){
   ns <- NS(id)
   tagList(
@@ -46,7 +50,7 @@ mod_name_of_module1_ui <- function(id){
 mod_name_of_module1_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
-    
+
     listeNotions<-colnames(DATA)[5:239]
     
     updateSelectInput(session,'notionUI',choices=listeNotions,selected = "jardin")
@@ -58,11 +62,10 @@ mod_name_of_module1_server <- function(id){
     # affichage(notion,découpage)
     output$plotAffichage<-renderPlot({
       if (input$decoupageID=="Partition linguistique") {
-        partitionChoisi<-spdf.geo
+        affichage(input$notionUI,partition = spdf.geo)
       } else {
-        partitionChoisi <- spdf.dpt
+        affichage(input$notionUI,partition = spdf.dpt)
       }
-      affichage(input$notionUI,partition = partitionChoisi)
     })
     
     
