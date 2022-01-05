@@ -24,6 +24,7 @@ usethis::use_package( "terra" )
 usethis::use_package( "shinydashboard" )
 usethis::use_package( "ggplot2" )
 usethis::use_package( "dygraphs" )
+usethis::use_package( "gt" )
 
 ## Add modules ----
 ## Create a module infrastructure in R/
