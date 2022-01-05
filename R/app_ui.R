@@ -17,7 +17,7 @@ app_ui <- function(request) {
       dashboardSidebar(
         sidebarMenu(
           menuItem("Geomatique", tabName = "Geomatique", icon = icon("dashboard")),
-          menuItem("Graphique intéractif", tabName = "Graphes", icon = icon("th"))
+          menuItem("Graphique intéractif", tabName = "Graphes", icon = icon("industry"))
         )
       ),
       ## Body content

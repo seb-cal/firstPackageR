@@ -47,8 +47,6 @@ mod_name_of_module1_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    charger_Donnees("data-raw")
-    
     listeNotions<-colnames(DATA)[5:239]
     
     updateSelectInput(session,'notionUI',choices=listeNotions,selected = "jardin")
