@@ -10,7 +10,7 @@
 mod_name_of_module2_ui <- function(id){
   ns <- NS(id)
   tagList(
-    h2("Plot intéractif (1min de chargement dsl)"),
+    h2("Plot intéractif (1min de chargement)"),
     dygraphOutput(ns("plot"))
  
   )

@@ -47,7 +47,6 @@ mod_name_of_module1_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    source("R/geoMat.R")
     charger_Donnees("data-raw")
     
     listeNotions<-colnames(DATA)[5:239]
