@@ -166,8 +166,10 @@ shinyapps.io propose des services de déploiement d'application shiny en suivant
 un modèle freemium. Par conséquence leur service gratuit est bridé et peut 
 créer des dysfonctionnements lorsque de la puissance de calcul est requis.
 
+L'application est disponible sur:
+https://ptcomstidcalvigns.shinyapps.io/firstpackager/
 
-\subsection{Rcpp}
+\subsection{Optimisation}
 Nous obtenons en effet des problèmes d'optimisation quand l'application est 
 déployé sur le service gratuit de shinyapps.io. Notament pour notre graphique 
 interactif et lorsque on modifie le découpage géographie de la carte. Ces deux 
