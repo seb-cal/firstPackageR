@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Maladie à coronavirus 2019 (COVID-19)</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Kone Kassim et Sebastien Calvignac" />
+    <script src="libs/header-attrs-2.11/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Maladie à coronavirus 2019 (COVID-19)
+### Kone Kassim et Sebastien Calvignac
+### (updated: 2022-01-09)
+
+---
+
+
+
+
+
+
+Que le coronavirus SARS-Cov2, responsable de la maladie Covid-19, mute n'a rien d'étonnant. L'important est l'ampleur de ses mutations. Explications.
+--
+background-image: url(https://images.unric.org/fr/wp-content/uploads/sites/2/2020/04/coronavirus-image-virus.jpg)
+
+???
+---
+
+# C'est quoi la COVID-19 ?
+
+Les Coronavirus sont une grande famille de virus, qui provoquent des maladies allant d’un simple
+rhume (certains virus saisonniers sont des Coronavirus) à des pathologies plus sévères comme le
+MERS ou le SRAS.
+
+
+
+
+--
+Le virus identifié en janvier 2020 en Chine est un nouveau Coronavirus. La maladie provoquée par ce
+Coronavirus a été nommée COVID-19 par l’Organisation mondiale de la Santé (OMS).
+---
+background-image: url(https://www.touteleurope.eu/wp-content/uploads/2020/08/croissance_2017.jpg
+touteleurope.eu)
+
+???
+---
+# Quels sont les symptômes de la maladie ?
+
+1. Fièvre ou sensation de fièvre, toux, difficultés à respirer : 
+    + après le retour d'une zone où circule le virus ;
+    + ou après un contact étroit* avec une personne contaminée par le virus ;
+
+--
+Chargement des jeux de données :
+
+Kaggle Datasets : le nom de chaque jeu de données de Kaggle a un 'k_' au début.
+--
+
+```
+## Installing package into 'C:/Users/sebas/Documents/R/win-library/4.1'
+## (as 'lib' is unspecified)
+```
+
+```
+## package 'ggthemes' successfully unpacked and MD5 sums checked
+## 
+## The downloaded binary packages are in
+## 	C:\Users\sebas\AppData\Local\Temp\RtmpUPBk9g\downloaded_packages
+```
+---
+
+# Histogramme des cas confirmé
+
+```
+## Warning: package 'ggthemes' was built under R version 4.1.2
+```
+
+```
+## Warning: package 'xaringan' was built under R version 4.1.2
+```
+
+![](Presentation_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
+---
+
+# Tables
+ Création d'un ensemble de données pour la Malaisie uniquement et nettoyage des données
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Date &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Country.Region &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Confirmed &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Deaths &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Recovered &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Active &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; New.cases &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; New.deaths &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; New.recovered &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; WHO.Region &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 106 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2020-01-22 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Malaysia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Western Pacific &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 293 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2020-01-23 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Malaysia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Western Pacific &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 480 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2020-01-24 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Malaysia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Western Pacific &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 667 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2020-01-25 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Malaysia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Western Pacific &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 854 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2020-01-26 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Malaysia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Western Pacific &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 1041 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2020-01-27 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Malaysia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Western Pacific &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+Fusionnons maintenant la carte du monde et nos données pour obtenir un ensemble de données complet, chaque pays avec ses données et ses coordonnées :
+--
+
+
+```
+## Warning: package 'ggmap' was built under R version 4.1.2
+```
+
+```
+## Google's Terms of Service: https://cloud.google.com/maps-platform/terms/.
+```
+
+```
+## Please cite ggmap if you use it! See citation("ggmap") for details.
+```
+
+
+---
+
+# Malaisie Cas actifs
+```
+1. Nous pouvons remarquer à partir du graphique ci-dessous, que l'efficacité du MCO sur les cas       "actifs" et "confirmés", a eu lieu après environ 20 jours de l'annonce du MCO, ce qui pourrait        suggérer plusieurs choses : soit le taux de récupération était si lent parce que les hôpitaux         n'étaient pas prêts, ou les règles ont été prises dans le MCO besoin d'un certain temps pour montrer  son efficacité sur la situation
+```
+--
+![](Presentation_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+
+---
+#  Cas actif par pays:
+
+ Élevé : États-Unis, Oman, Pérou
+
+ Moyenne : Russie, Brésil, Arabie Saoudite
+
+ Faible : Chine, Australie, Italie, Franc
+![](Presentation_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+---
+# boxplot
+![](Presentation_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+---
+# Malaisie Cas confirmés
+```
+Ce deuxième graphique ne fait que confirmer la même idée que le premier, le taux de croissance était fou au cours des 20 premiers jours puis a commencé à ralentir. Nous devons nous rappeler que la Malaisie a pris le virus plus tard par rapport aux autres pays asiatiques.
+```
+--
+![](Presentation_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+
+---
+
+
+# Les données de owid-covid-data
+
+
+
+```
+##      location new_cases_smoothed hosp_patients hosp_patients_per_million
+## 1 Afghanistan              0.000             0                         0
+## 2 Afghanistan              0.000             0                         0
+## 3 Afghanistan              0.000             0                         0
+## 4 Afghanistan              0.000             0                         0
+## 5 Afghanistan              0.000             0                         0
+## 6 Afghanistan              0.143             0                         0
+##   weekly_icu_admissions weekly_icu_admissions_per_million
+## 1                     0                                 0
+## 2                     0                                 0
+## 3                     0                                 0
+## 4                     0                                 0
+## 5                     0                                 0
+## 6                     0                                 0
+##   weekly_hosp_admissions weekly_hosp_admissions_per_million new_tests
+## 1                      0                                  0         0
+## 2                      0                                  0         0
+## 3                      0                                  0         0
+## 4                      0                                  0         0
+## 5                      0                                  0         0
+## 6                      0                                  0         0
+##   total_tests total_tests_per_thousand new_tests_per_thousand
+## 1           0                        0                      0
+## 2           0                        0                      0
+## 3           0                        0                      0
+## 4           0                        0                      0
+## 5           0                        0                      0
+## 6           0                        0                      0
+##   new_tests_smoothed new_tests_smoothed_per_thousand positive_rate
+## 1                  0                               0             0
+## 2                  0                               0             0
+## 3                  0                               0             0
+## 4                  0                               0             0
+## 5                  0                               0             0
+## 6                  0                               0             0
+##   tests_per_case tests_units total_vaccinations people_vaccinated
+## 1              0                              0                 0
+## 2              0                              0                 0
+## 3              0                              0                 0
+## 4              0                              0                 0
+## 5              0                              0                 0
+## 6              0                              0                 0
+##   people_fully_vaccinated new_vaccinations new_vaccinations_smoothed
+## 1                       0                0                         0
+## 2                       0                0                         0
+## 3                       0                0                         0
+## 4                       0                0                         0
+## 5                       0                0                         0
+## 6                       0                0                         0
+##   total_vaccinations_per_hundred people_vaccinated_per_hundred
+## 1                              0                             0
+## 2                              0                             0
+## 3                              0                             0
+## 4                              0                             0
+## 5                              0                             0
+## 6                              0                             0
+##   people_fully_vaccinated_per_hundred new_vaccinations_smoothed_per_million
+## 1                                   0                                     0
+## 2                                   0                                     0
+## 3                                   0                                     0
+## 4                                   0                                     0
+## 5                                   0                                     0
+## 6                                   0                                     0
+##   stringency_index population population_density median_age aged_65_older
+## 1             8.33   38928341             54.422       18.6         2.581
+## 2             8.33   38928341             54.422       18.6         2.581
+## 3             8.33   38928341             54.422       18.6         2.581
+## 4             8.33   38928341             54.422       18.6         2.581
+## 5             8.33   38928341             54.422       18.6         2.581
+## 6             8.33   38928341             54.422       18.6         2.581
+##   aged_70_older gdp_per_capita extreme_poverty cardiovasc_death_rate
+## 1         1.337       1803.987               0               597.029
+## 2         1.337       1803.987               0               597.029
+## 3         1.337       1803.987               0               597.029
+## 4         1.337       1803.987               0               597.029
+## 5         1.337       1803.987               0               597.029
+## 6         1.337       1803.987               0               597.029
+##   diabetes_prevalence female_smokers male_smokers handwashing_facilities
+## 1                9.59              0            0                 37.746
+## 2                9.59              0            0                 37.746
+## 3                9.59              0            0                 37.746
+## 4                9.59              0            0                 37.746
+## 5                9.59              0            0                 37.746
+## 6                9.59              0            0                 37.746
+##   hospital_beds_per_thousand life_expectancy human_development_index
+## 1                        0.5           64.83                   0.511
+## 2                        0.5           64.83                   0.511
+## 3                        0.5           64.83                   0.511
+## 4                        0.5           64.83                   0.511
+## 5                        0.5           64.83                   0.511
+## 6                        0.5           64.83                   0.511
+##   excess_mortality
+## 1                0
+## 2                0
+## 3                0
+## 4                0
+## 5                0
+## 6                0
+```
+
+---
+#  nouveaux cas lissés,patients hospitalisés
+
+![](Presentation_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
+
+---
+# Cas actifs :
+
+ Élevé : États-Unis, Oman, Pérou
+
+ Moyenne : Russie, Brésil, Arabie Saoudite
+
+ Faible : Chine, Australie, Italie, France.
+--
+![](Presentation_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
+
+---
+
+
+
+
+# Profilage de l'entrée des données
+
+1.Probablement l'une des premières étapes, lorsque nous obtenons un nouvel ensemble de données à analyser, est de savoir s'il y a des valeurs manquantes (NA dans R) et le type de données.
+
+2.La fonction df_status présente dans funModeling peut nous aider en montrant ces nombres en valeurs relatives et en pourcentage. Elle récupère également les statistiques sur les infinis et les zéros.
+
+    q_zeros : quantité de zéros (p_zeros : en pourcentage)
+    
+    q_inf : quantité de valeurs infinies (p_inf : en pourcentage)
+    
+    q_na : quantité de NA (p_na : en pourcentage)
+  
+    type : facteur ou numérique
+  
+    unique : quantité de valeurs uniques
+
+
+
+
+```
+## 
+## Attaching package: 'dplyr'
+```
+
+```
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+```
+
+```
+## Warning: package 'reshape' was built under R version 4.1.2
+```
+
+```
+## 
+## Attaching package: 'reshape'
+```
+
+```
+## The following object is masked from 'package:dplyr':
+## 
+##     rename
+```
+
+```
+## 
+## Attaching package: 'data.table'
+```
+
+```
+## The following object is masked from 'package:reshape':
+## 
+##     melt
+```
+
+```
+## The following objects are masked from 'package:dplyr':
+## 
+##     between, first, last
+```
+
+```
+## Warning: package 'formattable' was built under R version 4.1.2
+```
+
+```
+## Warning: package 'gridExtra' was built under R version 4.1.2
+```
+
+```
+## 
+## Attaching package: 'gridExtra'
+```
+
+```
+## The following object is masked from 'package:dplyr':
+## 
+##     combine
+```
+
+```
+## Warning: package 'funModeling' was built under R version 4.1.2
+```
+
+```
+## Loading required package: Hmisc
+```
+
+```
+## Warning: package 'Hmisc' was built under R version 4.1.2
+```
+
+```
+## Loading required package: lattice
+```
+
+```
+## Loading required package: survival
+```
+
+```
+## Loading required package: Formula
+```
+
+```
+## 
+## Attaching package: 'Hmisc'
+```
+
+```
+## The following objects are masked from 'package:dplyr':
+## 
+##     src, summarize
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     format.pval, units
+```
+
+```
+## funModeling v.1.9.4 :)
+## Examples and tutorials at livebook.datascienceheroes.com
+##  / Now in Spanish: librovivodecienciadedatos.ai
+```
+
+```
+##                                 variable q_zeros p_zeros q_na p_na q_inf p_inf
+## 1                               location       0    0.00    0    0     0     0
+## 2                     new_cases_smoothed   10769   10.89    0    0     0     0
+## 3                          hosp_patients   86714   87.67    0    0     0     0
+## 4              hosp_patients_per_million   86714   87.67    0    0     0     0
+## 5                  weekly_icu_admissions   98054   99.14    0    0     0     0
+## 6      weekly_icu_admissions_per_million   98054   99.14    0    0     0     0
+## 7                 weekly_hosp_admissions   97390   98.47    0    0     0     0
+## 8     weekly_hosp_admissions_per_million   97390   98.47    0    0     0     0
+## 9                              new_tests   54415   55.02    0    0     0     0
+## 10                           total_tests   54740   55.35    0    0     0     0
+## 11              total_tests_per_thousand   54803   55.41    0    0     0     0
+## 12                new_tests_per_thousand   54681   55.29    0    0     0     0
+## 13                    new_tests_smoothed   47274   47.80    0    0     0     0
+## 14       new_tests_smoothed_per_thousand   47601   48.13    0    0     0     0
+## 15                         positive_rate   52028   52.60    0    0     0     0
+## 16                        tests_per_case   51205   51.77    0    0     0     0
+## 17                           tests_units       0    0.00    0    0     0     0
+## 18                    total_vaccinations   82854   83.77    0    0     0     0
+## 19                     people_vaccinated   83643   84.57    0    0     0     0
+## 20               people_fully_vaccinated   86349   87.31    0    0     0     0
+## 21                      new_vaccinations   85603   86.55    0    0     0     0
+## 22             new_vaccinations_smoothed   70904   71.69    0    0     0     0
+## 23        total_vaccinations_per_hundred   82977   83.90    0    0     0     0
+## 24         people_vaccinated_per_hundred   83805   84.73    0    0     0     0
+## 25   people_fully_vaccinated_per_hundred   86692   87.65    0    0     0     0
+## 26 new_vaccinations_smoothed_per_million   70943   71.73    0    0     0     0
+## 27                      stringency_index   16395   16.58    0    0     0     0
+## 28                            population     642    0.65    0    0     0     0
+## 29                    population_density    6997    7.07    0    0     0     0
+## 30                            median_age   10486   10.60    0    0     0     0
+## 31                         aged_65_older   11480   11.61    0    0     0     0
+## 32                         aged_70_older   10975   11.10    0    0     0     0
+## 33                        gdp_per_capita   10140   10.25    0    0     0     0
+## 34                       extreme_poverty   38991   39.42    0    0     0     0
+## 35                 cardiovasc_death_rate   10102   10.21    0    0     0     0
+## 36                   diabetes_prevalence    7846    7.93    0    0     0     0
+## 37                        female_smokers   29440   29.77    0    0     0     0
+## 38                          male_smokers   30455   30.79    0    0     0     0
+## 39                handwashing_facilities   54291   54.89    0    0     0     0
+## 40            hospital_beds_per_thousand   18004   18.20    0    0     0     0
+## 41                       life_expectancy    4986    5.04    0    0     0     0
+## 42               human_development_index    9956   10.07    0    0     0     0
+## 43                      excess_mortality   95403   96.46    0    0     0     0
+##         type unique
+## 1  character    230
+## 2    numeric  24730
+## 3    numeric   5007
+## 4    numeric   9314
+## 5    numeric    651
+## 6    numeric    648
+## 7    numeric   1373
+## 8    numeric   1370
+## 9    numeric  23974
+## 10   numeric  43185
+## 11   numeric  38443
+## 12   numeric   7698
+## 13   numeric  27103
+## 14   numeric   8047
+## 15   numeric    570
+## 16   numeric   5529
+## 17 character      5
+## 18   numeric  15713
+## 19   numeric  14783
+## 20   numeric  11829
+## 21   numeric  11837
+## 22   numeric  16528
+## 23   numeric   6008
+## 24   numeric   4683
+## 25   numeric   3260
+## 26   numeric   8591
+## 27   numeric    176
+## 28   numeric    229
+## 29   numeric    208
+## 30   numeric    137
+## 31   numeric    189
+## 32   numeric    187
+## 33   numeric    195
+## 34   numeric     77
+## 35   numeric    191
+## 36   numeric    147
+## 37   numeric    112
+## 38   numeric    127
+## 39   numeric     97
+## 40   numeric    102
+## 41   numeric    206
+## 42   numeric    154
+## 43   numeric   2615
+```
+
+
+---
+
+# Analyse des valeurs manquantes
+
+![](Presentation_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
+
+---
+
+# Tracé des caractéristiques catégorielles
+
+
+
+```
+## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## "none")` instead.
+```
+
+![](Presentation_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
+
+```
+##       tests_units frequency percentage cumulative_perc
+## 1                     45521      46.03           46.03
+## 2 tests performed     33292      33.66           79.69
+## 3   people tested      9896      10.01           89.70
+## 4  samples tested      9197       9.30           99.00
+## 5   units unclear       998       1.01          100.00
+```
+
+---
+
+# Analyse numérique des caractéristiques
+
+1.variable : nom de la variable
+
+2.mean : la moyenne bien connue
+
+ **std_dev** : écart-type, une mesure de la dispersion ou de l'écart autour de la valeur moyenne. Une      valeur autour de 0 signifie une variation quasi nulle (elle ressemble donc plus à une constante)     ; de  l'autre côté, il est plus difficile de définir ce qu'est une valeur élevée, mais on peut        dire que     plus la variation est élevée, plus la dispersion est grande. Le chaos peut ressembler     à une variation  standard infinie. L'unité est la même que la moyenne afin de pouvoir la comparer.
+
+   **variation_coef** : coefficient de variation=std_dev/moyenne. Comme le std_dev est un nombre          absolu,    il  est bon d'avoir un indicateur qui le met en nombre relatif, en comparant le std_dev     à la moyenne   Une  valeur de 0,22 indique que le std_dev est à 22% de la moyenne S'il était          proche de 0, alors la         variable tend à être plus centrée autour de la moyenne. Si nous         comparons deux                  classificateurs, nous  pouvons préférer celui qui a le moins de       std_dev et de variation_coef pour sa    précision.
+
+    p_01, p_05, p_25, p_50, p_75, p_95, p_99 : Les percentiles à 1%, 5%, 25%, et ainsi de suite. Vous     trouverez plus loin dans ce chapitre un examen complet des percentiles.
+
+
+```
+## Warning: Unknown columns: `tests_units`
+```
+
+
+---
+
+# Tracé de caractéristiques numériques (histogramme)
+
+![](Presentation_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;![](Presentation_files/figure-html/unnamed-chunk-19-2.png)&lt;!-- --&gt;![](Presentation_files/figure-html/unnamed-chunk-19-3.png)&lt;!-- --&gt;
+
+---
+background-image: url(https://www.moneyvox.fr/i/media/05i/005729idd9.jpg
+moneyvox.fr)
+
+???
+---
+
+background-image: url(https://www.funeraire-info.fr/wp-content/uploads/2019/08/carte-de-remerciement-deces.jpg
+funeraire-info.fr)
+
+???
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

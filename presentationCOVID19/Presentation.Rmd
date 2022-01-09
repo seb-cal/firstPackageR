@@ -1,0 +1,510 @@
+---
+title: "Maladie à coronavirus 2019 (COVID-19)"
+author: "Kone Kassim et Sebastien Calvignac"
+date: "(updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+
+```{r include = FALSE}
+knitr::opts_chunk$set(echo=FALSE)
+```
+
+
+Que le coronavirus SARS-Cov2, responsable de la maladie Covid-19, mute n'a rien d'étonnant. L'important est l'ampleur de ses mutations. Explications.
+--
+background-image: url(https://images.unric.org/fr/wp-content/uploads/sites/2/2020/04/coronavirus-image-virus.jpg)
+
+???
+---
+
+# C'est quoi la COVID-19 ?
+
+Les Coronavirus sont une grande famille de virus, qui provoquent des maladies allant d’un simple
+rhume (certains virus saisonniers sont des Coronavirus) à des pathologies plus sévères comme le
+MERS ou le SRAS.
+
+
+
+
+--
+Le virus identifié en janvier 2020 en Chine est un nouveau Coronavirus. La maladie provoquée par ce
+Coronavirus a été nommée COVID-19 par l’Organisation mondiale de la Santé (OMS).
+---
+background-image: url(https://www.touteleurope.eu/wp-content/uploads/2020/08/croissance_2017.jpg
+touteleurope.eu)
+
+???
+---
+# Quels sont les symptômes de la maladie ?
+
+1. Fièvre ou sensation de fièvre, toux, difficultés à respirer : 
+    + après le retour d'une zone où circule le virus ;
+    + ou après un contact étroit* avec une personne contaminée par le virus ;
+
+--
+Chargement des jeux de données :
+
+Kaggle Datasets : le nom de chaque jeu de données de Kaggle a un 'k_' au début.
+--
+```{r}
+k_clean_complete <- read.csv("covid_19_clean_complete.csv")
+k_full_grouped <- read.csv("full_grouped.csv")
+k_usa <- read.csv("usa_county_wise.csv")
+k_country_wise_late <- read.csv("country_wise_latest.csv")
+k_day_wise <- read.csv("day_wise.csv")
+k_worldmeter <- read.csv("worldometer_data.csv")
+library(ggplot2)
+install.packages("ggthemes", repos = "http://cran.us.r-project.org")
+Malaysia_data<- k_full_grouped[k_full_grouped$Country.Region == "Malaysia" ,]
+Malaysia_data$Date <- as.Date(Malaysia_data$Date)
+```
+---
+
+# Histogramme des cas confirmé
+```{r}
+library(ggthemes)
+ library(xaringan)
+Malaysia_data<- k_full_grouped[k_full_grouped$Country.Region == "Malaysia" ,]
+Malaysia_data$Date <- as.Date(Malaysia_data$Date)
+x=as.numeric(Malaysia_data$Confirmed)
+hist(x,probability = TRUE, col = "blue")
+```
+---
+
+# Tables
+ Création d'un ensemble de données pour la Malaisie uniquement et nettoyage des données
+
+```{r}
+knitr::kable(head(Malaysia_data), format = 'html')
+```
+
+---
+
+Fusionnons maintenant la carte du monde et nos données pour obtenir un ensemble de données complet, chaque pays avec ses données et ses coordonnées :
+--
+
+```{r}
+library(ggmap)
+ratio_dataset<- k_worldmeter[,c("Country.Region" ,"Population"  , "TotalCases", "TotalDeaths" ,"TotalRecovered" ,"ActiveCases")]
+world_map <- map_data("world")
+world_map <- merge(world_map , ratio_dataset , by.x = "region" , by.y = "Country.Region")
+ratio_dataset$TotalCasesRatio  <-  ratio_dataset$TotalCases/ ratio_dataset$Population
+```
+
+```{r}
+start <- which(Malaysia_data$Date == "2020-03-18")
+end <- which(Malaysia_data$Date == "2020-06-09")
+MCO_malaysia <- Malaysia_data[Malaysia_data$Date >= "2020-03-18" & Malaysia_data$Date <= "2020-06-09" , ]
+min_act <- which.min(MCO_malaysia$Active)
+max_act <- which.max(MCO_malaysia$Active)
+```
+---
+
+# Malaisie Cas actifs
+```
+1. Nous pouvons remarquer à partir du graphique ci-dessous, que l'efficacité du MCO sur les cas       "actifs" et "confirmés", a eu lieu après environ 20 jours de l'annonce du MCO, ce qui pourrait        suggérer plusieurs choses : soit le taux de récupération était si lent parce que les hôpitaux         n'étaient pas prêts, ou les règles ont été prises dans le MCO besoin d'un certain temps pour montrer  son efficacité sur la situation
+```
+--
+```{r}
+attach(Malaysia_data)
+g_active <- ggplot(data = Malaysia_data , aes(x = Date , y = Active)) + 
+            geom_line(linetype = "solid" , size = 2 , colour = "Orange") + 
+            theme_economist() +  
+            geom_vline(xintercept=as.numeric(Date[c(start, end)]) , colour = "Red" , size =2 , linetype = 4)+
+    
+            labs(title="Malaysia Active Cases", x ="Date", y = "Number of Active Cases")+
+            annotate("pointrange", x = MCO_malaysia$Date[min_act], y = MCO_malaysia$Active[min_act] ,  colour = "purple",                      size = 1 ,  ymin = 12, ymax = 28 , alpha = 0.4) + 
+    
+            annotate("text", x = MCO_malaysia$Date[min_act+30], y = MCO_malaysia$Active[min_act]  , label = paste("Maximum Point ("             , MCO_malaysia$Date[min_act] , ")"),                  colour = "purple" ) +
+
+            annotate("pointrange", x = MCO_malaysia$Date[max_act], y = MCO_malaysia$Active[max_act] ,  colour = "red",                         size = 1 ,  ymin = 12, ymax = 28 , alpha = 0.4)+
+            
+            annotate("text", x = MCO_malaysia$Date[max_act+30], y = MCO_malaysia$Active[max_act]  , label = paste("Maximum Point ("             , MCO_malaysia$Date[max_act] , ")"),colour = "red" )
+g_active 
+```
+
+---
+#  Cas actif par pays:
+
+ Élevé : États-Unis, Oman, Pérou
+
+ Moyenne : Russie, Brésil, Arabie Saoudite
+
+ Faible : Chine, Australie, Italie, Franc
+```{r}
+#attach(world_map)
+g_map_c <- ggplot(world_map , aes(x = long , y = lat , group = group)) + 
+           geom_polygon(aes(fill = long * 1000000) , color = "black") + 
+            scale_fill_gradient2 (low = "red" , mid = "white" , high = "orange")+
+            coord_equal()
+            
+
+g_map_c
+
+```
+---
+# boxplot
+```{r}
+ggplot(data = world_map, aes_string(x = "long", y = "lat")) +
+  geom_boxplot(aes(fill = "long") , color = "blue")
+
+  
+```
+---
+# Malaisie Cas confirmés
+```
+Ce deuxième graphique ne fait que confirmer la même idée que le premier, le taux de croissance était fou au cours des 20 premiers jours puis a commencé à ralentir. Nous devons nous rappeler que la Malaisie a pris le virus plus tard par rapport aux autres pays asiatiques.
+```
+--
+```{r}
+#confirmed
+g_conf <- ggplot(data = Malaysia_data , aes(x = Date , y = Confirmed)) + 
+            geom_line(linetype = "solid" , size = 2 , colour = "Orange") + 
+            theme_economist() +  
+             labs(title="Malaysia Confirmed Cases", x ="Date", y = "Number of Confirmed Cases")+
+            geom_vline(xintercept=as.numeric(Malaysia_data$Date[c(start, end)]) , colour = "Red" ,                 size =2 , linetype = 4)
+    
+g_conf
+```
+
+---
+
+
+# Les données de owid-covid-data
+
+
+```{r}
+o_covid_data <- read.csv("owid-covid-data.csv")
+o_covid_data[is.na(o_covid_data) ] <- 0
+data <- o_covid_data
+data <- data[,-c(1:2 , 4:6 , 8:19)]
+head(data)
+
+
+```
+
+---
+#  nouveaux cas lissés,patients hospitalisés
+
+```{r }
+
+attach(data)
+plot(new_cases_smoothed,hosp_patients)
+
+
+```
+
+---
+# Cas actifs :
+
+ Élevé : États-Unis, Oman, Pérou
+
+ Moyenne : Russie, Brésil, Arabie Saoudite
+
+ Faible : Chine, Australie, Italie, France.
+--
+```{r eval=require('DT'), tidy=FALSE}
+library(ggplot2)
+aspect_ratio <- 2.5
+height <- 7
+
+g_map_d <- ggplot(world_map , aes(x = long , y = lat , group = group)) + 
+            geom_polygon(aes(fill = TotalCases*1000000 ) , color = "black") +
+            scale_fill_gradient2 (low = "blue" , mid = "white" , high = "purple")+
+            coord_equal()
+            
+
+g_map_d
+```
+
+---
+
+```{r}
+#Creat a new dataset
+# Function 1 : For ploting missing value
+plot_missing <- function(data, title = NULL, ggtheme = theme_gray(), theme_config = list("legend.position" = c("bottom"))) {
+  ## Declare variable first to pass R CMD check
+  feature <- num_missing <- pct_missing <- group <- NULL
+  ## Check if input is data.table
+  is_data_table <- is.data.table(data)
+  ## Detect input data class
+  data_class <- class(data)
+  ## Set data to data.table
+  if (!is_data_table) data <- data.table(data)
+  ## Extract missing value distribution
+  missing_value <- data.table(
+    "feature" = names(data),
+    "num_missing" = sapply(data, function(x) {sum(is.na(x))})
+  )
+  missing_value[, feature := factor(feature, levels = feature[order(-rank(num_missing))])]
+  missing_value[, pct_missing := num_missing / nrow(data)]
+  missing_value[pct_missing < 0.05, group := "Good"]
+  missing_value[pct_missing >= 0.05 & pct_missing < 0.4, group := "OK"]
+  missing_value[pct_missing >= 0.4 & pct_missing < 0.8, group := "Bad"]
+  missing_value[pct_missing >= 0.8, group := "Remove"][]
+  ## Set data class back to original
+  if (!is_data_table) class(missing_value) <- data_class
+  ## Create ggplot object
+  output <- ggplot(missing_value, aes_string(x = "feature", y = "num_missing", fill = "group")) +
+    geom_bar(stat = "identity") +
+    geom_text(aes(label = paste0(round(100 * pct_missing, 2), "%"))) +
+    scale_fill_manual("Group", values = c("Good" = "#1a9641", "OK" = "#a6d96a", "Bad" = "#fdae61", "Remove" = "#d7191c"), breaks = c("Good", "OK", "Bad", "Remove")) +
+    scale_y_continuous(labels = comma) +
+    coord_flip() +
+    xlab("Features") + ylab("Number of missing rows") +
+    ggtitle(title) +
+    ggtheme + theme_linedraw()+
+    do.call(theme, theme_config)
+  ## Print plot
+  print(output)
+  ## Set return object
+  return(invisible(missing_value))
+}
+
+# Function 2: For plotting histogram
+plot_histogram <- function(data, title = NULL, ggtheme = theme_gray(), theme_config = list(), ...) {
+  if (!is.data.table(data)) data <- data.table(data)
+  ## Stop if no continuous features
+  if (split_columns(data)$num_continuous == 0) stop("No Continuous Features")
+  ## Get continuous features
+  continuous <- split_columns(data)$continuous
+  ## Get dimension
+  n <- nrow(continuous)
+  p <- ncol(continuous)
+  ## Calculate number of pages
+  pages <- ceiling(p / 16L)
+  for (pg in seq.int(pages)) {
+    ## Subset data by column
+    subset_data <- continuous[, seq.int(16L * pg - 15L, min(p, 16L * pg)), with = FALSE]
+    setnames(subset_data, make.names(names(subset_data)))
+    n_col <- ifelse(ncol(subset_data) %% 4L, ncol(subset_data) %/% 4L + 1L, ncol(subset_data) %/% 4L)
+    ## Create ggplot object
+    plot <- lapply(
+      seq_along(subset_data),
+      function(j) {
+        x <- na.omit(subset_data[, j, with = FALSE])
+        ggplot(x, aes_string(x = names(x))) +
+          geom_histogram(bins = 30L, ...,fill='#92b7ef') +
+          scale_x_continuous(labels = comma) +
+          scale_y_continuous(labels = comma) +
+          ylab("Frequency") +
+          ggtheme + theme_linedraw()+
+          do.call(theme, theme_config)
+      }
+    )
+    ## Print plot object
+    if (pages > 1) {
+      suppressWarnings(do.call(grid.arrange, c(plot, ncol = n_col, nrow = 4L, top = title, bottom = paste("Page", pg))))
+    } else {
+      suppressWarnings(do.call(grid.arrange, c(plot, top = title)))
+    }
+  }
+}
+
+# Function 3 : Getting missing values
+.getAllMissing <- function(dt) {
+  if (!is.data.table(dt)) dt <- data.table(dt)
+  sapply(dt, function(x) {
+    sum(is.na(x)) == length(x)
+  })
+}
+
+# Function 4 : Spliting columns
+split_columns <- function(data) {
+  ## Check if input is data.table
+  is_data_table <- is.data.table(data)
+  ## Detect input data class
+  data_class <- class(data)
+  ## Set data to data.table
+  if (!is_data_table) data <- data.table(data)
+  ## Find indicies for continuous features
+  all_missing_ind <- .getAllMissing(data)
+  ind <- sapply(data[, which(!all_missing_ind), with = FALSE], is.numeric)
+  ## Count number of discrete, continuous and all-missing features
+  n_all_missing <- sum(all_missing_ind)
+  n_continuous <- sum(ind)
+  n_discrete <- ncol(data) - n_continuous - n_all_missing
+  ## Create object for continuous features
+  continuous <- data[, which(ind), with = FALSE]
+  ## Create object for discrete features
+  discrete <- data[, which(!ind), with = FALSE]
+  ## Set data class back to original
+  if (!is_data_table) class(discrete) <- class(continuous) <- data_class
+  ## Set return object
+  return(
+    list(
+      "discrete" = discrete,
+      "continuous" = continuous,
+      "num_discrete" = n_discrete,
+      "num_continuous" = n_continuous,
+      "num_all_missing" = n_all_missing
+    )
+  )
+}
+
+# Function 5 : plotting density plot for numerical variable 
+plot_density <- function(data, title = NULL, ggtheme = theme_gray(), theme_config = list(), ...) {
+  if (!is.data.table(data)) data <- data.table(data)
+  ## Stop if no continuous features
+  if (split_columns(data)$num_continuous == 0) stop("No Continuous Features")
+  ## Get continuous features
+  continuous <- split_columns(data)$continuous
+  ## Get dimension
+  n <- nrow(continuous)
+  p <- ncol(continuous)
+  ## Calculate number of pages
+  pages <- ceiling(p / 16L)
+  for (pg in seq.int(pages)) {
+    ## Subset data by column
+    subset_data <- continuous[, seq.int(16L * pg - 15L, min(p, 16L * pg)), with = FALSE]
+    setnames(subset_data, make.names(names(subset_data)))
+    n_col <- ifelse(ncol(subset_data) %% 4L, ncol(subset_data) %/% 4L + 1L, ncol(subset_data) %/% 4L)
+    ## Create ggplot object
+    plot <- lapply(
+      seq_along(subset_data),
+      function(j) {
+        x <- na.omit(subset_data[, j, with = FALSE])
+        ggplot(x, aes_string(x = names(x))) +
+          geom_density(...,fill="#e2c5e5") +
+          scale_x_continuous(labels = comma) +
+          scale_y_continuous(labels = percent) +
+          ylab("Density") +
+          ggtheme + theme_linedraw()+
+          do.call(theme, theme_config)
+      }
+    )
+    ## Print plot object
+    if (pages > 1) {
+      suppressWarnings(do.call(grid.arrange, c(plot, ncol = n_col, nrow = 4L, top = title, bottom = paste("Page", pg))))
+    } else {
+      suppressWarnings(do.call(grid.arrange, c(plot, top = title)))
+    }
+  }
+}
+
+
+```
+
+
+# Profilage de l'entrée des données
+
+1.Probablement l'une des premières étapes, lorsque nous obtenons un nouvel ensemble de données à analyser, est de savoir s'il y a des valeurs manquantes (NA dans R) et le type de données.
+
+2.La fonction df_status présente dans funModeling peut nous aider en montrant ces nombres en valeurs relatives et en pourcentage. Elle récupère également les statistiques sur les infinis et les zéros.
+
+    q_zeros : quantité de zéros (p_zeros : en pourcentage)
+    
+    q_inf : quantité de valeurs infinies (p_inf : en pourcentage)
+    
+    q_na : quantité de NA (p_na : en pourcentage)
+  
+    type : facteur ou numérique
+  
+    unique : quantité de valeurs uniques
+
+
+
+```{r}
+library(dplyr)
+library(reshape)
+library(data.table)
+library(data.table)
+library(formattable)
+library(gridExtra)
+library(funModeling)
+df_status(data)
+
+```
+
+
+---
+
+# Analyse des valeurs manquantes
+
+```{r}
+plot_missing(data)
+```
+
+---
+
+# Tracé des caractéristiques catégorielles
+
+
+```{r}
+getDataFrameWith50Categories <- function(df){
+    factorDF <- mutate_all(df, function(x) as.factor(x))
+    features <- names(factorDF)
+    for(feature in features){
+        if(length(levels(factorDF[,feature]))>50){
+            factorDF[feature] <- NULL
+        }
+        
+    }
+   factorDF         
+}
+                           
+categoricalData <- getDataFrameWith50Categories(data)
+freq(categoricalData)
+```
+
+---
+
+# Analyse numérique des caractéristiques
+
+1.variable : nom de la variable
+
+2.mean : la moyenne bien connue
+
+ **std_dev** : écart-type, une mesure de la dispersion ou de l'écart autour de la valeur moyenne. Une      valeur autour de 0 signifie une variation quasi nulle (elle ressemble donc plus à une constante)     ; de  l'autre côté, il est plus difficile de définir ce qu'est une valeur élevée, mais on peut        dire que     plus la variation est élevée, plus la dispersion est grande. Le chaos peut ressembler     à une variation  standard infinie. L'unité est la même que la moyenne afin de pouvoir la comparer.
+
+   **variation_coef** : coefficient de variation=std_dev/moyenne. Comme le std_dev est un nombre          absolu,    il  est bon d'avoir un indicateur qui le met en nombre relatif, en comparant le std_dev     à la moyenne   Une  valeur de 0,22 indique que le std_dev est à 22% de la moyenne S'il était          proche de 0, alors la         variable tend à être plus centrée autour de la moyenne. Si nous         comparons deux                  classificateurs, nous  pouvons préférer celui qui a le moins de       std_dev et de variation_coef pour sa    précision.
+
+    p_01, p_05, p_25, p_50, p_75, p_95, p_99 : Les percentiles à 1%, 5%, 25%, et ainsi de suite. Vous     trouverez plus loin dans ce chapitre un examen complet des percentiles.
+
+```{r}
+getNumericalDF <- function(df){
+    numericDF <- df
+    features <- names(numericDF)
+    for(feature in features){
+        if(!is.numeric(df[,feature])){
+            numericDF[feature] <- NULL
+        }
+    }
+    numericDF
+}
+numericalData <- getNumericalDF(data) # which are num/int data type
+numericalDataFeature <- names(numericalData) 
+categoricalDataFeature <- names(categoricalData)
+numericalData <- select(numericalData, -one_of(categoricalDataFeature)) # select that feature which are not categoricalDataFeature
+# profiling_num(numericalData)
+```
+
+
+---
+
+# Tracé de caractéristiques numériques (histogramme)
+
+```{r}
+plot_histogram(numericalData)
+```
+
+---
+background-image: url(https://www.moneyvox.fr/i/media/05i/005729idd9.jpg
+moneyvox.fr)
+
+???
+---
+
+background-image: url(https://www.funeraire-info.fr/wp-content/uploads/2019/08/carte-de-remerciement-deces.jpg
+funeraire-info.fr)
+
+???
+
+
