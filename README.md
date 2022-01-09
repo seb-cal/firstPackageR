@@ -7,5 +7,5 @@ Instructions for running application from R console:
 1. > library(devtools)
 2. > install_github("sebastiencalvignacedu/firstPackageR")
 3. press enter to skip updating versions of packages.
-4. library(firstPackageR)
-5. run_app()
+4. > library(firstPackageR)
+5. > run_app()
