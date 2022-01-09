@@ -9,8 +9,8 @@
 #' @importFrom shiny NS tagList 
 load("./data/spdfGEO.Rdata")
 load("./data/spdfDPT.Rdata")
-load("./data/thesoc_data.Rdata")
-load("./data/thesoc_spdf.Rdata")
+load("./data/thesoc_data.RData")
+load("./data/thesoc_spdf.RData")
 mod_name_of_module1_ui <- function(id){
   ns <- NS(id)
   tagList(
@@ -25,6 +25,16 @@ mod_name_of_module1_ui <- function(id){
           
         ),
         mainPanel(
+          h5("Occitanie est une zone géographique au sud de la France qui a sa 
+             propre langue appelé l'occitan avec différent dialectes. Un 
+             sondage qui date du début du 20ème siècle, a enregistré quel mots 
+             était utilisé dans chaque village pour exprimer une même idée. 
+             Avec ces données nous pouvons visualiser quel mots était 
+             utilisé dans l'espace géographique. Nous mesurons aussi la 
+             concordance entre les dialecte et les découpages géographiques 
+             tel que les départements. Enfin nous tentons de recréer de 
+             nouvelles frontières basées uniquement sur des attributs 
+             linguistiques."),
           plotOutput(NS(id,'plotAffichage')),
           textOutput(NS(id,"stats")),
           
